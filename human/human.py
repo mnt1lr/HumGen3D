@@ -196,7 +196,11 @@ class Human:
         with open(preset_path) as json_file:
             preset_data = json.load(json_file)
 
-        gender = preset.split(os.sep)[1]
+        if preset_data["keys"]["Male"] >= 0.5:
+            gender = "male"
+        else:
+            gender = "female"
+        # gender = preset.split(os.sep)[1]
 
         human = cls._import_human(context, gender)
 
