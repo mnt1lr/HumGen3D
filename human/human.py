@@ -197,9 +197,10 @@ class Human:
             with open(preset_path) as json_file:
                 preset_data = json.load(json_file)
 
+        except AttributeError:
+            preset_data = preset
         except FileNotFoundError:
             preset_data = json.loads(preset)
-
         if preset_data["keys"]["Male"] >= 0.5:
             gender = "male"
         else:
