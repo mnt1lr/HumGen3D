@@ -186,21 +186,26 @@ class Human:
         Returns:
             Human: A Human instance
         """
-        preset_path = os.path.join(
-            get_prefs().filepath, preset.replace("jpg", "json")  # TODO
-        )
+        try:
+            preset_path = os.path.join(
+                get_prefs().filepath, preset.replace("jpg", "json")  # TODO
+            )
 
-        if prettify_eevee:
-            set_eevee_ao_and_strip(context)
+            if prettify_eevee:
+                set_eevee_ao_and_strip(context)
 
-        with open(preset_path) as json_file:
-            preset_data = json.load(json_file)
+            with open(preset_path) as json_file:
+                preset_data = json.load(json_file)
+
+        except FileNotFoundError:
+            preset_data = json.loads(preset)
 
         if preset_data["keys"]["Male"] >= 0.5:
             gender = "male"
         else:
             gender = "female"
         # gender = preset.split(os.sep)[1]
+        
 
         human = cls._import_human(context, gender)
 
